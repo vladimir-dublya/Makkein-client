@@ -1,0 +1,192 @@
+@import './components/Base/Header/styles.module.scss';
+@import './components/Base/Footer/styles.module.scss';
+
+@import './components/Pages/Home/styles.module.scss';
+@import './components/Pages/About/styles.module.scss';
+@import './components/Pages/BooksCatalog/styles.module.scss';
+@import './components/Pages/Book/styles.module.scss';
+@import './components/Pages/Contact/styles.module.scss';
+@import './components/Pages/News/styles.module.scss';
+@import './components/Pages/NewsCatalog/styles.module.scss';
+
+@font-face {
+  font-family: Dnipro-Regular;
+  src: url('../fonts/DniproCity-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: DniproCity-Medium;
+  src: url('../fonts/DniproCity-Medium.otf') format('opentype');
+}
+
+$dark: #252525;
+$light: #eee;
+$gray: #ececec;
+$lightgray: #f4f4f4;
+$brown: #2b2223;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+  font-family: Dnipro-Regular;
+  scroll-behavior: smooth;
+  position: relative;
+  overflow-x: hidden;
+  margin: 0;
+  color: $light;
+}
+
+img {
+  pointer-events: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+a,
+a:visited,
+a:active,
+a:focus,
+a:hover {
+  text-decoration: none;
+  user-select: none;
+  color: $lightgray;
+}
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: $brown;
+}
+
+body,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+p,
+a,
+td,
+li,
+label,
+input,
+button {
+  font-size: 1rem;
+  list-style: none;
+}
+
+#root {
+  margin: 0 auto;
+}
+
+//******************flex******************
+.row {
+  display: flex;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.between {
+  justify-content: space-between;
+}
+
+.center {
+  justify-content: center;
+}
+
+// @media screen and (max-width: 1440px) {
+//   #root {
+//     max-width: 1296px;
+//   }
+// }
+
+// @media screen and (max-width: 1024px) {
+//   #root {
+//     width: 100%;
+//   }
+// }
+
+
+//******************custom scrollBar******************
+::-webkit-scrollbar {
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: $light;
+
+  /* ползунок скроллбара */
+  &-thumb {
+    border-radius: 0.2rem;
+  }
+}
+
+/* Стрелки */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  background: linear-gradient(120deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(240deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(0deg, $light 30%, rgba(0, 0, 0, 0) 31%);
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+  background: linear-gradient(300deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(60deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(180deg, $light 30%, rgba(0, 0, 0, 0) 31%);
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  background: linear-gradient(30deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(150deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(270deg, $light 30%, rgba(0, 0, 0, 0) 31%);
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background: linear-gradient(210deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(330deg, $light 40%, rgba(0, 0, 0, 0) 41%),
+    linear-gradient(90deg, $light 30%, rgba(0, 0, 0, 0) 31%);
+}
+
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-button:vertical:end:increment,
+::-webkit-scrollbar-button:vertical:start:decrement,
+::-webkit-scrollbar-button:horizontal:start:decrement,
+::-webkit-scrollbar-button:horizontal:end:increment {
+  background-color: grey;
+
+  &:hover {
+    background-color: $dark;
+  }
+}
+
+// .cursor-glow {
+//     height: 30px;
+//     width: 30px;
+//     border-radius: 50%;
+//     background: rgb(165, 161, 139);
+//     background: -moz-radial-gradient(circle, rgba(195, 199, 142, 0.8) 0%, rgb(236, 221, 11) 100%);
+//     box-shadow: 0px 0px 20px rgba(238,174,202,1);
+//     background: radial-gradient(circle, rgba(195, 199, 142, 0.8) 0%, rgb(236, 221, 11) 100%);
+//     background-repeat: no-repeat;
+//     background-position: center;
+//     position: absolute;
+// }
