@@ -4,7 +4,7 @@ import { fetchAllAuthors, fetchBooks, searchBook } from "../../../http/bookAPI";
 import { fetchCategories } from "../../../http/categoriesAPI";
 import { fetchCurrentPages } from "../../../http/currentPagesAPI";
 import axios from "axios";
-
+import Paginator from 'react-hooks-paginator';
 import "./styles.module.scss";
 
 const BooksCatalog = () => {
@@ -21,15 +21,19 @@ const BooksCatalog = () => {
 
   const [currentCategory, setCurrentCategory] = useState('')
   const [currentAuthor, setCurrentAuthor] = useState('')
+  const pageLimit = 10;
+
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState([]);
+  const [currentData, setCurrentData] = useState([]);
 
   useEffect(() => {
     fetchCategories().then(data => setCategories(data))
     fetchCurrentPages().then(data => setPagination(data))
     fetchAllAuthors().then(data => setAllAuthor(data))
-    fetchBooks(1).then(data => setBooks(data))
-    fetchBooks(1).then(data => setVisibleBooks(data))
-
-    searchBook(nameBook, endAge, currentCategory, currentAuthor, 1).then(data => setBooks(data))
+    fetchBooks().then(data => setBooks(data))
+    fetchBooks().then(data => setVisibleBooks(data))
 
     setVisibleBooks(books);
 
@@ -42,6 +46,10 @@ const BooksCatalog = () => {
     const data = await fetchBooks(page)
     await setVisibleBooks(data)
   }
+
+  useEffect(() => {
+    setCurrentData(data.slice(offset, offset + pageLimit));
+  }, [offset, data]);
 
   const [visibleBooks, setVisibleBooks] = useState(books)
 
@@ -199,7 +207,7 @@ const BooksCatalog = () => {
             )
           })}
 
-          <div className="paginations__block">
+          {/* <div className="paginations__block">
             {pagination.map(page => {
               return (
                 <div
@@ -212,7 +220,16 @@ const BooksCatalog = () => {
                 </div>
               )
             })}
-          </div>
+          </div> */}
+
+      <Paginator
+        totalRecords={data.length}
+        pageLimit={pageLimit}
+        pageNeighbours={2}
+        setOffset={setOffset}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
         </div>
 
       </div>
