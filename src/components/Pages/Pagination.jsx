@@ -15,7 +15,7 @@ const Pagination = ({ booksPerPage, totalBooks, paginate }) => {
                   className="paginations__block_page"
                   key={page}
                   style={{ display: 'flex', marginRight: 20 }}
-                  onClick={(e) => paginate(page)}
+                  onClick={() => paginate(page)}
                 >
                   <button className="paginations_button" style={{ padding: '5px 10px' }}>{page}</button>
                 </div>

@@ -201,7 +201,7 @@ const BooksCatalog = () => {
               </div>
             )
           })}
-          <Pagination booksPerPage={booksPerPage} totalBooks={visibleBooks.length} paginate={paginate}/>
+          {visibleBooks && <Pagination booksPerPage={booksPerPage} totalBooks={visibleBooks.length} paginate={paginate}/>}
         </div>
 
       </div>
