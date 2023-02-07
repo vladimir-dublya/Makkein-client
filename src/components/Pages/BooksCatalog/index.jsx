@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { fetchAllAuthors, fetchBooks, searchBook } from "../../../http/bookAPI";
 import { fetchCategories } from "../../../http/categoriesAPI";
 import { fetchCurrentPages } from "../../../http/currentPagesAPI";
 import axios from "axios";
-import Paginator from 'react-hooks-paginator';
 import "./styles.module.scss";
+import Pagination from "../Pagination";
 
 const BooksCatalog = () => {
 
@@ -21,16 +21,12 @@ const BooksCatalog = () => {
 
   const [currentCategory, setCurrentCategory] = useState('')
   const [currentAuthor, setCurrentAuthor] = useState('')
-  const pageLimit = 10;
 
-  const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, setData] = useState([]);
-  const [currentData, setCurrentData] = useState([]);
+  const [booksPerPage] = useState(4);
 
   useEffect(() => {
     fetchCategories().then(data => setCategories(data))
-    fetchCurrentPages().then(data => setPagination(data))
     fetchAllAuthors().then(data => setAllAuthor(data))
     fetchBooks().then(data => setBooks(data))
     fetchBooks().then(data => setVisibleBooks(data))
@@ -38,18 +34,9 @@ const BooksCatalog = () => {
     setVisibleBooks(books);
 
     setIsVisible(true)
-  }, [fetchBooks, fetchCategories, fetchCurrentPages, fetchAllAuthors, searchBook])
+  }, [fetchBooks, fetchCategories, fetchAllAuthors, searchBook])
 
   const navigate = useNavigate();
-
-  async function displayActivePage(page) {
-    const data = await fetchBooks(page)
-    await setVisibleBooks(data)
-  }
-
-  useEffect(() => {
-    setCurrentData(data.slice(offset, offset + pageLimit));
-  }, [offset, data]);
 
   const [visibleBooks, setVisibleBooks] = useState(books)
 
@@ -68,6 +55,14 @@ const BooksCatalog = () => {
     setNameBook('');   setCurrentAuthor('');
     setEndAge('');     setCurrentCategory('');
   }
+
+  const lastBookIndex = currentPage * booksPerPage;
+  const firstBookIndex = lastBookIndex - booksPerPage;
+  const currentBook = visibleBooks.slice(firstBookIndex, lastBookIndex);
+
+  const paginate = (pageNumber) => 
+    setCurrentPage(pageNumber);
+  
 
   return (
     <div className="library">
@@ -176,7 +171,7 @@ const BooksCatalog = () => {
 
         <div className="library__info_block col-lg-9 col-md-8 col-12 row justify-content-evenly">
 
-          {visibleBooks.map(book => {
+          {currentBook.map(book => {
             return (
               <div key={book.id} className="library__book__block col-lg-3 col-md-6 col-8 mb-3">
                 {isVisible ?
@@ -206,30 +201,7 @@ const BooksCatalog = () => {
               </div>
             )
           })}
-
-          {/* <div className="paginations__block">
-            {pagination.map(page => {
-              return (
-                <div
-                  className="paginations__block_page"
-                  key={page}
-                  style={{ display: 'flex', marginRight: 20 }}
-                  onClick={() => displayActivePage(page)}
-                >
-                  <button className="paginations_button" style={{ padding: '5px 10px' }}>{page}</button>
-                </div>
-              )
-            })}
-          </div> */}
-
-      <Paginator
-        totalRecords={data.length}
-        pageLimit={pageLimit}
-        pageNeighbours={2}
-        setOffset={setOffset}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+          <Pagination booksPerPage={booksPerPage} totalBooks={visibleBooks.length} paginate={paginate}/>
         </div>
 
       </div>
