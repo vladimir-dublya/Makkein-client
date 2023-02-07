@@ -19,7 +19,7 @@ const BooksCatalog = () => {
   const [pagination, setPagination] = useState([])
   const [isVisible, setIsVisible] = useState(false)
 
-  const [currentCategory, setCurrentCategory] = useState('')
+  const [currentCategory, setCurrentCategory] = useState('');
   const [currentAuthor, setCurrentAuthor] = useState('')
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +33,7 @@ const BooksCatalog = () => {
 
     setVisibleBooks(books);
 
+
     setIsVisible(true)
   }, [fetchBooks, fetchCategories, fetchAllAuthors, searchBook])
 
@@ -40,14 +41,9 @@ const BooksCatalog = () => {
 
   const [visibleBooks, setVisibleBooks] = useState(books)
 
-  const searchBooks = (e) => {
-    e.preventDefault()
-    setVisibleBooks(visibleBooks.filter(book => {
-    console.log(books);
-      return (book.name.includes(nameBook) && book.author.includes(currentAuthor) && book.createDate.toString().includes(endAge) && book.category.toString().includes(currentCategory))
-    }))
-    //searchBook(nameBook, endAge, currentCategory, currentAuthor, 1).then(data => setBooks(data))
-  }
+  useEffect(() => {setVisibleBooks(books.filter(book => {
+    return (book.name.toLowerCase().includes(nameBook) && book.author.includes(currentAuthor) && book.createDate.toString().includes(endAge) && book.category.toString().includes(currentCategory))
+  }))},[nameBook, currentAuthor, endAge, currentCategory]);
 
   const clearInput = (e) => {
     e.preventDefault()
@@ -80,7 +76,9 @@ const BooksCatalog = () => {
                 name="search"
                 placeholder="Знайти книгу"
                 value={nameBook}
-                onChange={e => setNameBook(e.target.value)}
+                onChange={e => {
+                  setNameBook(e.target.value);
+            }}
               />
             </div>
 
@@ -120,13 +118,15 @@ const BooksCatalog = () => {
             <h4 className="filter__title">Жанр:</h4>
 
             <div className="dropdown">
-              <select value={currentCategory} onChange={(e) => setCurrentCategory(e.target.value)}>
+              <select value={currentCategory} onChange={(e) => {
+                console.log(e.target.value);
+                setCurrentCategory(e.target.value)}}>
                 <option value="" selected disabled hidden>Вибрати категорію</option>
                 {categories.map(category => {
                   return (
                     <option
                       key={category.id}
-                      value={category.name}
+                      value={category.id}
                     >
                       {category.name}
                     </option>
@@ -151,19 +151,7 @@ const BooksCatalog = () => {
                 })}
               </select>
             </div>
-          
-            <button
-              className="mt-3 align-self-end p-2 m-1"
-              onClick={searchBooks}
-            >
-              Знайти
-            </button>
-            <button
-              className="mt-3 align-self-end p-2"
-              onClick={clearInput}
-            >
-              Очистити
-            </button>
+
           </form>
 
 
