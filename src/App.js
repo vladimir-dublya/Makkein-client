@@ -9,8 +9,11 @@ import NewsCatalog from './components/Pages/NewsCatalog'
 // import Contact from './components/Pages/Contact'
 import Book from './components/Pages/Book'
 import News from './components/Pages/News'
-
+import {Authorization} from './components/Pages/Authorization/Authorization'
+import {BookAdd} from './components/Pages/BookAdd/BookAdd'
+import { Context } from './Context.js'  
 import './App.scss';
+import { useState, useEffect } from 'react'
 // import ThreeNews from './components/Pages/ThreeNews'
 
 
@@ -24,29 +27,44 @@ function App() {
   //       elem.style.top = mousey + 'px';
   //   });
 
+  const [userIsInside, setUserIsInside] = useState();
+
+  useEffect(() => {
+    let user = localStorage.getItem('user');
+    console.log(user);
+    setUserIsInside(user ? true : false);
+  })
+
   return (
     <div className="App">
       {/* <div class="cursor-glow"></div> */}
-      <BrowserRouter>
-        <Header />
+      <Context.Provider value={{
+        userIsInside,
+        setUserIsInside
+      }}>
+        <BrowserRouter>
+          <Header />
 
-        <Routes>
+          <Routes>
 
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/bookscatalog' element={<BooksCatalog />} />
-          <Route path={'bookscatalog/book' +'/:id'} element={<Book />} />
-          <Route path='/newscatalog' element={<NewsCatalog />} />
-          <Route path={'newscatalog/news' + '/:id'} element={<News />} />
-          {/* <Route path={'newscatalog/news/lastnews' + '/:id'} element={<News />} /> */}
-          {/* <Route path='/contact' element={<Contact />} /> */}
+            <Route path='/' element={<Home />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/bookscatalog' element={<BooksCatalog />} />
+            <Route path={'bookscatalog/book' +'/:id'} element={<Book />} />
+            <Route path='/newscatalog' element={<NewsCatalog />} />
+            <Route path={'newscatalog/news' + '/:id'} element={<News />} />
+            <Route path={'/authorization'} element={<Authorization />} />
+            <Route path={'/bookAdd'} element={<BookAdd />} />
+            {/* <Route path={'newscatalog/news/lastnews' + '/:id'} element={<News />} /> */}
+            {/* <Route path='/contact' element={<Contact />} /> */}
 
-          <Route path="*" element={<Home />} />
+            <Route path="*" element={<Home />} />
 
-        </Routes>
+          </Routes>
 
-        <Footer />
-      </BrowserRouter>
+          <Footer />
+        </BrowserRouter>
+      </Context.Provider>
     </div>
   );
 }

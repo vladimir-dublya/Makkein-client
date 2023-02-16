@@ -1,0 +1,61 @@
+.auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #2B2223;
+    height: 100vh;
+
+    &__box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        width: 20%;
+        border: 1px solid #c7ad9e;
+        border-radius: 25px;
+        background-color: #362A2B;
+        padding: 1.3rem;
+
+        &__input{
+            border-radius: 6px;
+            border: 1px solid #c7ad9e;
+            background-color: inherit;
+            height: 2.5rem;
+            width: 100%;
+            padding-left: 5%;
+            color: #fff;
+
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #c7ad9e;
+    border-radius: 10px;
+    width: 70%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.button_Con {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.toast {
+    background-color: #957AA4;
+    color: #fff;
+}

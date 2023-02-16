@@ -182,30 +182,57 @@
                 align-content: center;
                 justify-content: center;
                 align-items: center;
+                gap: 20px;
 
                 .paginations__block_page{
-
+                    display: flex;
+                    justify-self: center;
+                    align-items: center;
+                    text-align: center;
                     .paginations_button{
                         background-color: transparent;
                         color: #fff;
                         border: 1px solid #c7ad9e;
                         border-radius: 10px;
+                        width: 20px;
+                        height: 100%;
+                        cursor: pointer;
                     }
                 }
 
-                input{
+                .input{
                     margin: 1rem;
                     background-color: transparent;
                     color: #fff;
                     font-size: 1.5rem;
                 }
 
-                input:focus{
+                .input:focus{
                     text-decoration: underline;
                 }
             }
             
         }
+    }
+
+    .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #c7ad9e;
+        border-radius: 10px;
+        width: 50%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .button_Con {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
     }
 }
 
